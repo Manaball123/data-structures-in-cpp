@@ -347,7 +347,7 @@ void RtBitset::Compress(
     //bytes to check per element
     unsigned int checkedBytes = (compressedSize / 8) + ((compressedSize % 8) == 0 ? 0 : 1);
     //cin >> a;
-    
+    unsigned int counter = 1;
     /*
     cout << "Address of startpoint: " << setw(2) << setfill('0') << hex << (long)data_ptr << endl;
     cout << "Expected endpoint: " << setw(2) << setfill('0') << hex << (long)data_ptr + (dataLength * dataSize) - 1 << endl;
@@ -357,10 +357,10 @@ void RtBitset::Compress(
     //iterates through all the elements
     for (unsigned int i = 0; i < numElements; i++)
     {
-        unsigned int counter = 0;
+        counter = 1;
         //iterates through each byte of the data block(ignore bytes that shouldn't be checked)
         //Move to the next element if enough bytes are checked OR enough bits are checked
-        for (unsigned int j = 0; j < checkedBytes || counter < compressedSize; j++)
+        for (unsigned int j = 0; j < checkedBytes && counter <= compressedSize; j++)
         {
                
                 unsigned char currentByte = *       //derefrence to get the data in that location
@@ -380,7 +380,7 @@ void RtBitset::Compress(
             //iterates though each bit of the byte
             //Move on to next byte if finished checking current byte OR checked enough bits(counter == length)
             //
-            for (unsigned short k = 0; k < 8 && counter < compressedSize; k++, counter++)
+            for (unsigned short k = 0; k < 8 && counter <= compressedSize; k++, counter++)
             {
 
                 if (currentByte >> k & 1)    //If the bit in location k is active
@@ -498,6 +498,9 @@ void RtBitset::ParseCompressed(
 
         }
         */
+
+
+
         //reset bit counter to 0
         //counts the number of bits checked in a element
         bit_ctr = 1;
@@ -521,7 +524,7 @@ void RtBitset::ParseCompressed(
                 }
                      
             }
-           
+            
             
 
 
