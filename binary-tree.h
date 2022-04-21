@@ -1,0 +1,15 @@
+
+
+
+namespace BT
+{
+    
+    class BinaryTree
+    {
+        
+        
+    };
+}
+
+
+

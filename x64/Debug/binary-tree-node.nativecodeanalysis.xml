@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Manab\Documents\GitHub\data-structs-cpp\</FILEPATH>
+      <FILENAME>binary-tree-node.cpp</FILENAME>
+      <LINE>4</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BT::BTNode::small_ptr' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BT::BTNode::{ctor}</FUNCTION>
+    <DECORATED>??0BTNode@BT@@QEAA@J@Z</DECORATED>
+    <FUNCLINE>4</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>BT::BTNode::small_ptr</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Manab\Documents\GitHub\data-structs-cpp\</FILEPATH>
+      <FILENAME>binary-tree-node.cpp</FILENAME>
+      <LINE>4</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BT::BTNode::element_ptr' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BT::BTNode::{ctor}</FUNCTION>
+    <DECORATED>??0BTNode@BT@@QEAA@J@Z</DECORATED>
+    <FUNCLINE>4</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>BT::BTNode::element_ptr</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Manab\Documents\GitHub\data-structs-cpp\</FILEPATH>
+      <FILENAME>binary-tree-node.cpp</FILENAME>
+      <LINE>4</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BT::BTNode::large_ptr' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BT::BTNode::{ctor}</FUNCTION>
+    <DECORATED>??0BTNode@BT@@QEAA@J@Z</DECORATED>
+    <FUNCLINE>4</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>BT::BTNode::large_ptr</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
