@@ -67,7 +67,8 @@ int main()
         0x00f0,
         0x7bcd,
         0x1234,
-        //0x1ffff,
+        0xffff,
+        0x1ffff,
     };
     //length of array
     unsigned int dataLen = sizeof(data) / sizeof(*data);
@@ -96,6 +97,7 @@ int main()
     //(look at parsed)
     //loop so program doesnt close 
     
+    cout << (*data == *parsed) << endl;
     while(1){}
     
     

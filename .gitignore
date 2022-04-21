@@ -3,6 +3,16 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+
+#remove builds and other stuff idk
+*.exe
+*.liik
+*.log
+*.pdb
+*.tlog
+*.obj
+*.idb
+
 # User-specific files
 *.rsuser
 *.suo
