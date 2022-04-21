@@ -70,6 +70,8 @@ void RtBitset::ClearBit(unsigned int index)
     this->content[index / 8] &= ~(1 << (7 - index % 8));
 }
 
+
+
 void RtBitset::ToggleBits(unsigned int start, unsigned int end)
 {
     //location of start and end byte( set everything inbetween)
@@ -378,14 +380,19 @@ void RtBitset::Compress(
             //iterates though each bit of the byte
             //Move on to next byte if finished checking current byte OR checked enough bits(counter == length)
             //
-            for (unsigned short k = 0; k < 8 || counter < compressedSize; k++, counter++)
+            for (unsigned short k = 0; k < 8 && counter < compressedSize; k++, counter++)
             {
 
                 if (currentByte >> k & 1)    //If the bit in location k is active
                 {
+                    
                     //Set bit in bitset
-                    this->SetBit(compressedSize * i          //position of the chunk
-                        + compressedSize - counter - 1);     //offset by bit
+                    this->SetBit(compressedSize * (i + 1)          //position of the chunk
+                        - counter);                                //offset by bit
+                    
+                    //set bit but better
+                    ///this->content[compressedSize * i] |= 1 << (compressedSize - counter - 1);
+                    //nvm
                 }
             }
             
@@ -494,8 +501,6 @@ void RtBitset::ParseCompressed(
         //reset bit counter to 0
         //counts the number of bits checked in a element
         bit_ctr = 1;
-        
-
 
         //fill in the bytes of each element
         //if filled in enough bytes skip the remaining elements
@@ -516,7 +521,7 @@ void RtBitset::ParseCompressed(
                 }
                      
             }
-            
+           
             
 
 

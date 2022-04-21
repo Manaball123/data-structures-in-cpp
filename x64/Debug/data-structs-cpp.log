@@ -1,2 +1,7 @@
 ﻿  main.cpp
+  runtime_bs.cpp
+C:\Users\Manab\Documents\GitHub\data-structs-cpp\runtime_bs.cpp(149,15): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Manab\Documents\GitHub\data-structs-cpp\runtime_bs.cpp(213,36): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Manab\Documents\GitHub\data-structs-cpp\runtime_bs.cpp(345,10): warning C4101: 'a': unreferenced local variable
+  Generating Code...
   data-structs-cpp.vcxproj -> C:\Users\Manab\Documents\GitHub\data-structs-cpp\x64\Debug\data-structs-cpp.exe

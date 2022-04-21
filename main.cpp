@@ -59,14 +59,15 @@ int main()
     //its a long dtype but everything in it are shorts so its bad(social credit--;)
     unsigned long data[] =
     {
+        0x7fff,
         0x0001,
         0x0002,
         0x0f00,
         0x7ff0,
-        0x7fff,
         0x00f0,
         0x7bcd,
         0x1234,
+        //0x1ffff,
     };
     //length of array
     unsigned int dataLen = sizeof(data) / sizeof(*data);
@@ -94,7 +95,8 @@ int main()
     //inspect memory now
     //(look at parsed)
     //loop so program doesnt close 
+    
     while(1){}
-
+    
     
 }
