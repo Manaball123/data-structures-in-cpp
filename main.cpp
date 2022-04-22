@@ -79,7 +79,7 @@ int main()
     cout << minSize << endl;
 
     //we should also allocate an array if we want our stuff back
-    unsigned long* parsed = new unsigned long[dataLen];
+    unsigned long* parsed = (unsigned long*)calloc(dataLen, dataSize);
 
     //now we will compress the data into a bitset
     //first we make the bitset
@@ -98,6 +98,11 @@ int main()
     //loop so program doesnt close 
     
     cout << (*data == *parsed) << endl;
+    for (int i = 0; i < dataLen; i++)
+    {
+        cout << "Data: " << data[i];
+        cout << "  Parsed: " << parsed[i] << endl;
+    }
     while(1){}
     
     
