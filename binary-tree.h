@@ -8,14 +8,14 @@ namespace BT
     {
         //root node
         BTNode *root;
-
+        void DeleteTree(BTNode* ptr);
 
         
 
     public:
         BinaryTree(long rootKey);
         ~BinaryTree();
-
+        
         //returns result value
         short AddNode(long key, void* value_ptr);
         //void AddToStack(long key);

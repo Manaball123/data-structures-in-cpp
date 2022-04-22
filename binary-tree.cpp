@@ -10,9 +10,20 @@ BinaryTree::BinaryTree(long rootKey)
 
 }
 
-
+//i need to clear memory here prob
 BinaryTree::~BinaryTree()
 {
+	this->DeleteTree(this->root);
+}
+void BinaryTree::DeleteTree(BTNode* ptr)
+{
+	if (ptr == nullptr)
+	{
+		return;
+	}
+	this->DeleteTree(ptr->small_ptr);
+	this->DeleteTree(ptr->large_ptr);
+	delete ptr;
 
 }
 //Me when the stack overflow :flushed:
@@ -115,6 +126,7 @@ short BinaryTree::AddNode(long key, void* value_ptr)
 		{
 			if (curr_ptr->large_ptr == nullptr)
 			{
+				
 				curr_ptr->large_ptr = new BTNode(key);
 				curr_ptr->large_ptr->element_ptr = value_ptr;
 			}

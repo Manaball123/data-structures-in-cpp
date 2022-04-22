@@ -7,6 +7,11 @@ BTNode::BTNode(long key)
 	//init all pointers to null
 	element_ptr = large_ptr = small_ptr = nullptr;
 }
+BTNode::~BTNode()
+{
+	//no more ptrs :sob:
+	delete element_ptr, large_ptr, small_ptr;
+}
 
 
 void* BTNode::Get()
