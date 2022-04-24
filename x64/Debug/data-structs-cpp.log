@@ -1,5 +1,3 @@
-﻿  binary-tree-node.cpp
-  binary-tree.cpp
-C:\Users\Manab\Documents\GitHub\data-structs-cpp\binary-tree.cpp(122,11): warning C4309: 'return': truncation of constant value
-  Generating Code...
+﻿  main.cpp
+C:\Users\Manab\Documents\GitHub\data-structs-cpp\main.cpp(76,23): warning C4018: '<': signed/unsigned mismatch
   data-structs-cpp.vcxproj -> C:\Users\Manab\Documents\GitHub\data-structs-cpp\x64\Debug\data-structs-cpp.exe

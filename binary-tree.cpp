@@ -52,6 +52,7 @@ BTNode* BinaryTree::RecNav(
 		else
 		{
 			return nullptr;
+			
 		}
 	}
 	//if key is smaller than key in ptr
@@ -129,7 +130,13 @@ short BinaryTree::AddNode(long key, void* value_ptr)
 				
 				curr_ptr->large_ptr = new BTNode(key);
 				curr_ptr->large_ptr->element_ptr = value_ptr;
+				return 0;
 			}
+			else
+			{
+				curr_ptr = curr_ptr->large_ptr;
+			}
+
 
 		}
 		//if key is smaller than key in ptr
@@ -139,6 +146,11 @@ short BinaryTree::AddNode(long key, void* value_ptr)
 			{
 				curr_ptr->small_ptr = new BTNode(key);
 				curr_ptr->small_ptr->element_ptr = value_ptr;
+				return 0;
+			}
+			else
+			{
+				curr_ptr = curr_ptr->small_ptr;
 			}
 
 		}

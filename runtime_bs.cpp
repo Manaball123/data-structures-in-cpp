@@ -363,10 +363,10 @@ void RtBitset::Compress(
         for (unsigned int j = 0; j < checkedBytes && counter <= compressedSize; j++)
         {
                
-                unsigned char currentByte = *       //derefrence to get the data in that location
+                unsigned char currentByte = *   //derefrence to get the data in that location
                 (
                     data_ptr +                  //pointer to data array
-                    (i * originalSize) +            //pointer to current block
+                    (i * originalSize) +        //pointer to current block
                     j                           //pointer to current byte in block
                 );      
                 //unsigned char* ptr = data_ptr + 

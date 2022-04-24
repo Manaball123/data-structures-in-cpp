@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="list.cpp" />
     <ClCompile Include="binary-tree-node.cpp" />
     <ClCompile Include="binary-tree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="runtime_bs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="list.h" />
     <ClInclude Include="binary-tree-node.h" />
     <ClInclude Include="binary-tree.h" />
     <ClInclude Include="runtime_bs.h" />

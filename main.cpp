@@ -3,11 +3,13 @@
 #include "runtime_bs.h"
 #include <cstddef>
 #include <iomanip>
-
+#include "binary-tree.h"
+#include <chrono>
 
 using namespace std;
 
 using namespace BS;
+using namespace BT;
 
 void FillArr(unsigned short* arr)
 {
@@ -16,47 +18,17 @@ void FillArr(unsigned short* arr)
 
 
 
+
 int main()
 {
 
     
-    /*
-    //unsigned short arr[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
-    unsigned short arr[] = {0x1A2B, 0x3C4D};
+   
 
-    //unsigned short arr[] = { 0x0000 };
-
-    //waste memory here
-    unsigned short peepoo[] = { 
-        0x0001,   //0000 0001 - 1
-        0x0002,   //0000 0010 - 2
-        0x0004,   //0000 0100 - 3
-        0x000f,    //0000 1111 - 4
-        0x0010,   //0001 0000 - 5
-    };
-    unsigned short poopee[5];
-    RtBitset bs1 = RtBitset(16 * sizeof(arr) / sizeof(arr[0]));
-
-    //bs1.Compress((void*)arr, 16, (sizeof(arr) / sizeof(arr[0])), sizeof(short));
-    //bs1.PrintBitsF();
-
-    //cout << RtBitset::GetMinLength((void*)peepoo, sizeof(long), (sizeof(peepoo) / sizeof(peepoo[0]))) << endl;;
-    unsigned int size = (sizeof(peepoo) / sizeof(peepoo[0])) * RtBitset::GetMinLength((void*)peepoo, sizeof(short), (sizeof(peepoo) / sizeof(peepoo[0])));
-    RtBitset bs = RtBitset(size);
-
-    bs.Compress( (void*)peepoo, RtBitset::GetMinLength((void*)peepoo, sizeof(short), (sizeof(peepoo) / sizeof(peepoo[0]))), ( sizeof(peepoo) / sizeof(peepoo[0]) ), sizeof(short) );
-    bs.PrintBitsF();
-    bs.ParseCompressed((void*)poopee, 5, sizeof(short), RtBitset::GetMinLength((void*)peepoo, sizeof(short), (sizeof(peepoo) / sizeof(peepoo[0]))));
     
-    while (1)
-    {
-
-    }
-    */
-
-
     //data is here
     //its a long dtype but everything in it are shorts so its bad(social credit--;)
+    
     unsigned long data[] =
     {
         0x7fff,
@@ -70,9 +42,12 @@ int main()
         0xffff,
         0x1ffff,
     };
+    //unsigned long* data[100000];
     //length of array
     unsigned int dataLen = sizeof(data) / sizeof(*data);
     unsigned int dataSize = sizeof(*data);
+
+
 
     //we can represent these numbers with at least these bits(per element)
     unsigned int minSize = RtBitset::GetMinLength((void*)data, dataSize, dataLen);
@@ -97,12 +72,53 @@ int main()
     //(look at parsed)
     //loop so program doesnt close 
     
-    cout << (*data == *parsed) << endl;
+    //cout << (*data == *parsed) << endl;
     for (int i = 0; i < dataLen; i++)
     {
         cout << "Data: " << data[i];
         cout << "  Parsed: " << parsed[i] << endl;
     }
+
+
+    
+
+    //binary tree test thing
+    /*
+    BinaryTree* tree1 = new BinaryTree(0);
+
+    long data[] = 
+    {
+        1,2,3,4,5,6,7,8,9,10
+    };
+
+
+    tree1->AddNode(2, (void*)&data[3]);
+    cout << "hi" << endl;
+    tree1->AddNode(5, (void*)&data[5]);
+    
+    tree1->AddNode(-1, (void*)&data[4]);
+    tree1->AddNode(1000000, (void*)&data[9]);
+    tree1->AddNode(-1337, (void*)&data[0]);
+    tree1->AddNode(42069, (void*)&data[2]);
+    tree1->AddNode(69420, (void*)&data[6]);
+    cout << *((long*)tree1->LoopNav(69420)->element_ptr) << endl;
+    */
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     while(1){}
     
     
