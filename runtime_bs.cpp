@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <iomanip>
-#include <cstddef>
+
 using namespace BS;
 void PrintByte(char b)
 {
@@ -18,13 +18,15 @@ RtBitset::RtBitset(unsigned int len)
     this->length = len;
     this->byteLength = (len / 8) + (len % 8 == 0 ? 0 : 1);
     //I hope this works, though it might not
-    this->content = (unsigned char*)malloc(sizeof(char) * byteLength);
+    this->content = (unsigned char*)calloc(sizeof(char) , byteLength);
 
+    /*
     //zeroes out the char array
     for (unsigned int i = 0; i < byteLength; i++)
     {
         this->content[i] = 0x00;
     }
+    */
 };
 RtBitset::~RtBitset()
 {
