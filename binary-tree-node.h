@@ -4,7 +4,7 @@ namespace BT
 {
     class BTNode
     {
-\
+
         
     public:
         //pointers to other nodes

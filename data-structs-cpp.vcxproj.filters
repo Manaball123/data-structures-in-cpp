@@ -13,30 +13,90 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\LinkedList">
+      <UniqueIdentifier>{8273fdf7-2687-431d-8ef9-4dfdf37d258d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BinaryTree">
+      <UniqueIdentifier>{3f61b8c8-4f8b-45b3-a573-123884dbf9e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HuffmanEncoding">
+      <UniqueIdentifier>{943ae266-d581-44f2-a960-c1e0f106cbcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bitset">
+      <UniqueIdentifier>{29c8ed59-c17f-42a1-bfc9-6ba9e5af15ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{e0919017-ad77-4abc-8552-8294f3bf076d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc\RawData">
+      <UniqueIdentifier>{3b602a62-8d1d-4ebd-b932-add3a5eadd38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LinkedList\Single">
+      <UniqueIdentifier>{c669f35b-16a7-4b0e-9440-16c50e80dee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LinkedList\Double">
+      <UniqueIdentifier>{8343fab2-6ed9-46ea-b91f-d5be5a146569}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="binary-tree-node.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="runtime_bs.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Bitset</Filter>
+    </ClCompile>
+    <ClCompile Include="raw_data.cpp">
+      <Filter>Source Files\Misc\RawData</Filter>
     </ClCompile>
     <ClCompile Include="binary-tree.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BinaryTree</Filter>
+    </ClCompile>
+    <ClCompile Include="binary-tree-node.cpp">
+      <Filter>Source Files\BinaryTree</Filter>
+    </ClCompile>
+    <ClCompile Include="linked_list_s.cpp">
+      <Filter>Source Files\LinkedList</Filter>
+    </ClCompile>
+    <ClCompile Include="huffman_tree.cpp">
+      <Filter>Source Files\HuffmanEncoding</Filter>
+    </ClCompile>
+    <ClCompile Include="hm_temp_node.cpp">
+      <Filter>Source Files\HuffmanEncoding</Filter>
+    </ClCompile>
+    <ClCompile Include="hm_node.cpp">
+      <Filter>Source Files\HuffmanEncoding</Filter>
+    </ClCompile>
+    <ClCompile Include="linked_list_d.cpp">
+      <Filter>Source Files\LinkedList\Double</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="binary-tree-node.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="runtime_bs.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Bitset</Filter>
+    </ClInclude>
+    <ClInclude Include="raw_data.h">
+      <Filter>Source Files\Misc\RawData</Filter>
+    </ClInclude>
+    <ClInclude Include="huffman_tree.h">
+      <Filter>Source Files\HuffmanEncoding</Filter>
+    </ClInclude>
+    <ClInclude Include="hm_temp_node.h">
+      <Filter>Source Files\HuffmanEncoding</Filter>
+    </ClInclude>
+    <ClInclude Include="hm_node.h">
+      <Filter>Source Files\HuffmanEncoding</Filter>
+    </ClInclude>
+    <ClInclude Include="linked_list_s.h">
+      <Filter>Source Files\LinkedList</Filter>
     </ClInclude>
     <ClInclude Include="binary-tree.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BinaryTree</Filter>
+    </ClInclude>
+    <ClInclude Include="binary-tree-node.h">
+      <Filter>Source Files\BinaryTree</Filter>
+    </ClInclude>
+    <ClInclude Include="linked_list_d.h">
+      <Filter>Source Files\LinkedList\Double</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

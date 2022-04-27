@@ -18,6 +18,11 @@ RawData::RawData(unsigned int dataSize)
 	this->dataSize = dataSize;
 }
 
+RawData::~RawData()
+{
+	delete this->data_ptr;
+}
+
 
 
 

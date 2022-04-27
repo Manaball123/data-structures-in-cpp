@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -141,12 +141,24 @@
   <ItemGroup>
     <ClCompile Include="binary-tree-node.cpp" />
     <ClCompile Include="binary-tree.cpp" />
+    <ClCompile Include="hm_node.cpp" />
+    <ClCompile Include="hm_temp_node.cpp" />
+    <ClCompile Include="huffman_tree.cpp" />
+    <ClCompile Include="linked_list_d.cpp" />
+    <ClCompile Include="linked_list_s.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="raw_data.cpp" />
     <ClCompile Include="runtime_bs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binary-tree-node.h" />
     <ClInclude Include="binary-tree.h" />
+    <ClInclude Include="hm_node.h" />
+    <ClInclude Include="hm_temp_node.h" />
+    <ClInclude Include="huffman_tree.h" />
+    <ClInclude Include="linked_list_d.h" />
+    <ClInclude Include="linked_list_s.h" />
+    <ClInclude Include="raw_data.h" />
     <ClInclude Include="runtime_bs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
