@@ -22,7 +22,7 @@ namespace LLS
 	class LinkedListS
 	{
 	public:
-		LinkedListS();
+		LinkedListS(void* data);
 		~LinkedListS();
 		
 		//add element at the end

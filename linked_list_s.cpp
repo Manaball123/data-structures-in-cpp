@@ -33,9 +33,10 @@ LLNodeS::~LLNodeS()
 
 //Linked list:
 
-LinkedListS::LinkedListS()
+LinkedListS::LinkedListS(void* data)
 {
-	this->rootNode = new LLNodeS();
+	this->rootNode = new LLNodeS(data);
+	this->endNode = this->rootNode;
 	this->length = 1;
 }
 
@@ -139,6 +140,17 @@ void LinkedListS::Insert(void* data, unsigned int index)
 
 void LinkedListS::Remove(unsigned int index) 
 {
+	
+	if (index > this->length)
+	{
+		return;
+	}
+	else if (index == 0)
+	{
+		this->Retract();
+		return;
+	}
+
 	LLNodeS* currentNode = this->rootNode;
 	for (unsigned int i = 0; i < index - 1; i++)
 	{
@@ -150,3 +162,18 @@ void LinkedListS::Remove(unsigned int index)
 	currentNode->next = ptr_cache;
 	this->length--;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

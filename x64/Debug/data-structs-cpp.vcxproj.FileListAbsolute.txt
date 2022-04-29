@@ -1,1 +1,2 @@
 C:\Users\Manab\Documents\GitHub\data-structs-cpp\x64\Debug\data-structs-cpp.exe
+C:\Users\Mana\Documents\GitHub\data-structures-in-cpp\x64\Debug\data-structs-cpp.exe

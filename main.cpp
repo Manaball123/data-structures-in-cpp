@@ -6,6 +6,7 @@
 #include "binary-tree.h"
 #include <chrono>
 #include "linked_list_d.h"
+#include "linked_list_s.h"
 #include "raw_data.h"
 
 using namespace std;
@@ -13,6 +14,7 @@ using namespace std;
 using namespace BS;
 using namespace BT;
 using namespace LLD;
+using namespace LLS;
 using namespace RD;
 
 void FillArr(unsigned short* arr)
@@ -125,7 +127,7 @@ int main()
     int *e10 = new int{ 10 };
 
     
-    LinkedListD l1 = LinkedListD((void*)e0);
+    LinkedListS l1 = LinkedListS((void*)e0);
 
     l1.Push((void*)e1);
     l1.Push((void*)e2);
@@ -145,7 +147,7 @@ int main()
         cout << *(int*)l1[i] << endl;
 
     }
-    cout << l1.length << endl;
+    //cout << l1.length << endl;
     l1.Remove(7);
     
 
