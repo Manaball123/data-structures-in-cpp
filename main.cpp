@@ -5,16 +5,16 @@
 #include <iomanip>
 #include "binary-tree.h"
 #include <chrono>
-#include "linked_list_d.h"
-#include "linked_list_s.h"
+#include "linked_list_at_d.h"
+#include "linked_list_at_s.h"
 #include "raw_data.h"
 
 using namespace std;
 
 using namespace BS;
 using namespace BT;
-using namespace LLD;
-using namespace LLS;
+using namespace ATLLD;
+using namespace ATLLS;
 using namespace RD;
 
 void FillArr(unsigned short* arr)
@@ -112,7 +112,7 @@ int main()
 
 
 
-
+    /*
     
     int* e0 = new int{ 0 };
     int *e1 = new int{ 1 };
@@ -147,7 +147,7 @@ int main()
         cout << *(int*)l1[i] << endl;
 
     }
-    //cout << l1.length << endl;
+    cout << "ddddddddddddddddddddddddddddddddd" << endl;
     l1.Remove(7);
     
 
@@ -171,19 +171,8 @@ int main()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     while(1){}
     
-    
+    */
+
 }

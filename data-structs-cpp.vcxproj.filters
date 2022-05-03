@@ -31,11 +31,23 @@
     <Filter Include="Source Files\Misc\RawData">
       <UniqueIdentifier>{3b602a62-8d1d-4ebd-b932-add3a5eadd38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\LinkedList\Single">
+    <Filter Include="Source Files\LinkedList\ArbitraryType">
+      <UniqueIdentifier>{023d8b99-17e1-40bf-93a0-8a3be8ffeeca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LinkedList\ArbitraryType\Single">
       <UniqueIdentifier>{c669f35b-16a7-4b0e-9440-16c50e80dee2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\LinkedList\Double">
+    <Filter Include="Source Files\LinkedList\ArbitraryType\Double">
       <UniqueIdentifier>{8343fab2-6ed9-46ea-b91f-d5be5a146569}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LinkedList\StaticType">
+      <UniqueIdentifier>{9ac03cd6-8fea-4e4c-97bd-0d9d7b01d082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LinkedList\StaticType\Double">
+      <UniqueIdentifier>{a42cdc3c-2599-43d6-aa55-e86128a967dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LinkedList\StaticType\Single">
+      <UniqueIdentifier>{0c73248f-44bf-403a-92c5-0919013c6983}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,20 +66,20 @@
     <ClCompile Include="binary-tree-node.cpp">
       <Filter>Source Files\BinaryTree</Filter>
     </ClCompile>
-    <ClCompile Include="linked_list_s.cpp">
-      <Filter>Source Files\LinkedList</Filter>
-    </ClCompile>
-    <ClCompile Include="huffman_tree.cpp">
+    <ClCompile Include="huffman_encoding.cpp">
       <Filter>Source Files\HuffmanEncoding</Filter>
     </ClCompile>
-    <ClCompile Include="hm_temp_node.cpp">
-      <Filter>Source Files\HuffmanEncoding</Filter>
+    <ClCompile Include="linked_list_at_d.cpp">
+      <Filter>Source Files\LinkedList\ArbitraryType\Double</Filter>
     </ClCompile>
-    <ClCompile Include="hm_node.cpp">
-      <Filter>Source Files\HuffmanEncoding</Filter>
+    <ClCompile Include="linked_list_at_s.cpp">
+      <Filter>Source Files\LinkedList\ArbitraryType\Single</Filter>
     </ClCompile>
-    <ClCompile Include="linked_list_d.cpp">
-      <Filter>Source Files\LinkedList\Double</Filter>
+    <ClCompile Include="linked_list_st_d.cpp">
+      <Filter>Source Files\LinkedList\StaticType\Double</Filter>
+    </ClCompile>
+    <ClCompile Include="linked_list_st_s.cpp">
+      <Filter>Source Files\LinkedList\StaticType\Single</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,17 +89,8 @@
     <ClInclude Include="raw_data.h">
       <Filter>Source Files\Misc\RawData</Filter>
     </ClInclude>
-    <ClInclude Include="huffman_tree.h">
+    <ClInclude Include="huffman_encoding.h">
       <Filter>Source Files\HuffmanEncoding</Filter>
-    </ClInclude>
-    <ClInclude Include="hm_temp_node.h">
-      <Filter>Source Files\HuffmanEncoding</Filter>
-    </ClInclude>
-    <ClInclude Include="hm_node.h">
-      <Filter>Source Files\HuffmanEncoding</Filter>
-    </ClInclude>
-    <ClInclude Include="linked_list_s.h">
-      <Filter>Source Files\LinkedList</Filter>
     </ClInclude>
     <ClInclude Include="binary-tree.h">
       <Filter>Source Files\BinaryTree</Filter>
@@ -95,8 +98,17 @@
     <ClInclude Include="binary-tree-node.h">
       <Filter>Source Files\BinaryTree</Filter>
     </ClInclude>
-    <ClInclude Include="linked_list_d.h">
-      <Filter>Source Files\LinkedList\Double</Filter>
+    <ClInclude Include="linked_list_at_d.h">
+      <Filter>Source Files\LinkedList\ArbitraryType\Double</Filter>
+    </ClInclude>
+    <ClInclude Include="linked_list_at_s.h">
+      <Filter>Source Files\LinkedList\ArbitraryType\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="linked_list_st_d.h">
+      <Filter>Source Files\LinkedList\StaticType\Double</Filter>
+    </ClInclude>
+    <ClInclude Include="linked_list_st_s.h">
+      <Filter>Source Files\LinkedList\StaticType\Single</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

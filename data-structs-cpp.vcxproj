@@ -141,11 +141,11 @@
   <ItemGroup>
     <ClCompile Include="binary-tree-node.cpp" />
     <ClCompile Include="binary-tree.cpp" />
-    <ClCompile Include="hm_node.cpp" />
-    <ClCompile Include="hm_temp_node.cpp" />
-    <ClCompile Include="huffman_tree.cpp" />
-    <ClCompile Include="linked_list_d.cpp" />
-    <ClCompile Include="linked_list_s.cpp" />
+    <ClCompile Include="huffman_encoding.cpp" />
+    <ClCompile Include="linked_list_at_d.cpp" />
+    <ClCompile Include="linked_list_at_s.cpp" />
+    <ClCompile Include="linked_list_st_d.cpp" />
+    <ClCompile Include="linked_list_st_s.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="raw_data.cpp" />
     <ClCompile Include="runtime_bs.cpp" />
@@ -153,11 +153,11 @@
   <ItemGroup>
     <ClInclude Include="binary-tree-node.h" />
     <ClInclude Include="binary-tree.h" />
-    <ClInclude Include="hm_node.h" />
-    <ClInclude Include="hm_temp_node.h" />
-    <ClInclude Include="huffman_tree.h" />
-    <ClInclude Include="linked_list_d.h" />
-    <ClInclude Include="linked_list_s.h" />
+    <ClInclude Include="huffman_encoding.h" />
+    <ClInclude Include="linked_list_at_d.h" />
+    <ClInclude Include="linked_list_at_s.h" />
+    <ClInclude Include="linked_list_st_d.h" />
+    <ClInclude Include="linked_list_st_s.h" />
     <ClInclude Include="raw_data.h" />
     <ClInclude Include="runtime_bs.h" />
   </ItemGroup>
