@@ -144,7 +144,6 @@
     <ClCompile Include="huffman_encoding.cpp" />
     <ClCompile Include="linked_list_at_d.cpp" />
     <ClCompile Include="linked_list_at_s.cpp" />
-    <ClCompile Include="linked_list_st_d.cpp" />
     <ClCompile Include="linked_list_st_s.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="raw_data.cpp" />

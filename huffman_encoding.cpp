@@ -114,7 +114,16 @@ BS::RtBitset* HMTree::Encode(void* data, unsigned int dataSize, unsigned int dat
 	//Create array of nodes
 	this->nodes = new HMNode[requiredNodes];
 	
-	//Create list with weights
+	//Create list with probability
+	STLinkedListD<unsigned int> probabilityOrdered = STLinkedListD<unsigned int>(0);
+	//This saves index of nodes of probablity saved above
+	STLinkedListD<unsigned int> nodeIndexes = STLinkedListD<unsigned int>(0);
+	for (unsigned int i = 0; i < dataVec.size(); i++)
+	{
+
+	}
+	
+	
 
 
 	//Initialize the endpoints(ones that contains actual values)
@@ -130,7 +139,7 @@ BS::RtBitset* HMTree::Encode(void* data, unsigned int dataSize, unsigned int dat
 	}
 
 
-
+	return new BS::RtBitset(1);
 }
 
 

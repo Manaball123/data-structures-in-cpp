@@ -75,9 +75,6 @@
     <ClCompile Include="linked_list_at_s.cpp">
       <Filter>Source Files\LinkedList\ArbitraryType\Single</Filter>
     </ClCompile>
-    <ClCompile Include="linked_list_st_d.cpp">
-      <Filter>Source Files\LinkedList\StaticType\Double</Filter>
-    </ClCompile>
     <ClCompile Include="linked_list_st_s.cpp">
       <Filter>Source Files\LinkedList\StaticType\Single</Filter>
     </ClCompile>
