@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿  huffman_encoding.cpp
 C:\Users\Mana\Documents\GitHub\data-structures-in-cpp\huffman_encoding.cpp(113,59): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
   main.cpp
@@ -5,4 +6,8 @@ C:\Users\Mana\Documents\GitHub\data-structures-in-cpp\main.cpp(187,23): warning 
 C:\Users\Mana\Documents\GitHub\data-structures-in-cpp\main.cpp(197,23): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
 C:\Users\Mana\Documents\GitHub\data-structures-in-cpp\linked_list_st_d.h(362): warning C4715: 'STLLD::STLinkedListD<int>::SequencedInsert': not all control paths return a value
+=======
+﻿  main.cpp
+C:\Users\Mana\Documents\GitHub\data-structures-in-cpp\main.cpp(101,23): warning C4018: '<': signed/unsigned mismatch
+>>>>>>> Stashed changes
   data-structs-cpp.vcxproj -> C:\Users\Mana\Documents\GitHub\data-structures-in-cpp\x64\Debug\data-structs-cpp.exe

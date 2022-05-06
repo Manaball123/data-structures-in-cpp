@@ -406,3 +406,12 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+*.obj
+*.obj
+*.log
+*.exe
+*.idb
+*.pdb
+*.tlog
+*.log
+x64/Debug/data-structs-cpp.log
