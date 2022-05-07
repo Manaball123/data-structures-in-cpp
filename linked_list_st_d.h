@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 
 
 // Bi-directional linked list:
@@ -322,6 +322,21 @@ namespace STLLD
 
 		}
 
+		void AddAfterNode(STLLNodeD<dtype>* node_ptr, dtype data)
+		{
+			STLLNodeD<dtype>* newNode = new STLLNodeD<dtype>(data);
+			//Reassigns the next node's previous pointer
+			node_ptr->next->prev = newNode;
+			//Assigns the new node's next pointer to the next node
+			newNode->next = node_ptr->next;
+			newNode->prev = node_ptr;
+			//Assigns current node's next pointer to newNode
+			node_ptr->next = newNode;
+
+			this->length++;
+			this->halfLength = length / 2;
+		}
+
 		//Automatically inserts a new element to the list, assuming that it is sorted
 		//This probably would break if it isnt sorted
 		//Returns the index it was inserted to
@@ -345,13 +360,12 @@ namespace STLLD
 				STLLNodeD<dtype>* currentNode = this->rootNode;
 				for (unsigned int i = 1; i < this->length; i++)
 				{
-					if (currentNode->data <= data)
+					if (currentNode->next->data > data)
 					{
-						if (currentNode->next->data > data)
+
+						if (currentNode->data <= data)
 						{
-							this->Insert(data, i);
-							this->length++;
-							this->halfLength = length / 2;
+							this->AddAfterNode(currentNode, data);
 							return i + 1;
 						}
 					}
@@ -359,6 +373,18 @@ namespace STLLD
 				}
 			}
 
+		}
+
+		void PrintList()
+		{
+			STLLNodeD<dtype>* currentNode = this->rootNode;
+			std::cout << "[";
+			for (unsigned int i = 1; i < this->length; i++)
+			{
+				std::cout << currentNode->data << ", ";
+				currentNode = currentNode->next;
+			}
+			std::cout << currentNode->data << "]\n";
 		}
 	};
 }

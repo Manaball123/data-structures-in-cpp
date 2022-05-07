@@ -407,6 +407,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 *.obj
+<<<<<<< Updated upstream
 *.obj
 *.log
 *.exe
@@ -415,3 +416,5 @@ FodyWeavers.xsd
 *.tlog
 *.log
 x64/Debug/data-structs-cpp.log
+=======
+>>>>>>> Stashed changes

@@ -183,22 +183,14 @@ int main()
     l1.Push(2);
     l1.Push(5);
     l1.Push(10);
-
-    for (int i = 0; i < l1.length; i++)
-    {
-
-        cout << l1[i] << endl;
-
-    }
+    l1.PrintList();
+    
+    
 
     l1.SequencedInsert(3);
-    l1.SequencedInsert(7);
-    l1.SequencedInsert(0);
-    for (int i = 0; i < l1.length; i++)
-    {
-
-        cout << l1[i] << endl;
-
-    }
+    cout << l1.SequencedInsert(7) << endl;
+    cout << l1.SequencedInsert(0) << endl;
+    
+    l1.PrintList();
     
 }
