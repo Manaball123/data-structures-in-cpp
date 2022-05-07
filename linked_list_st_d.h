@@ -177,6 +177,7 @@ namespace STLLD
 		}
 
 		//Inserts a new node AFTER given index
+		//Insert after 0xffffffff to insert before index 0
 		void Insert(dtype data, unsigned int index)
 		{
 			if (index > this->length)
@@ -184,11 +185,15 @@ namespace STLLD
 				return;
 			}
 
-			if (index == this->length)
+			else if (index == this->length)
 			{
 				this->Push(data);
-				this->length++;
-				this->halfLength = length / 2;
+				return;
+			}
+			else if (index == 0xffffffff)
+			{
+				this->Extend(data);
+				return;
 			}
 
 			else
@@ -258,7 +263,7 @@ namespace STLLD
 				return;
 			}
 
-			if (index == this->length)
+			else if (index == this->length)
 			{
 				this->Pop();
 				return;
@@ -267,12 +272,11 @@ namespace STLLD
 			else if (index == 0)
 			{
 				this->Retract();
-
 				return;
 			}
 			else
 			{
-				STLLNodeD* currentNode;
+				STLLNodeD<dtype>* currentNode;
 				if (index > this->halfLength)
 				{
 					//search backwards

@@ -10,6 +10,7 @@ namespace BS
 
         public:
             RtBitset(unsigned int len);
+            RtBitset();
             ~RtBitset();
             //pointer to content on heap
             unsigned char* content;
@@ -75,6 +76,7 @@ namespace BS
                 unsigned int compressedSize   //Unit size of compressed elemnts
             );
 
+            bool Reallocate(unsigned int len);
 
 
     };

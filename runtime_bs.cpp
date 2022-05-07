@@ -28,6 +28,27 @@ RtBitset::RtBitset(unsigned int len)
     }
     */
 };
+RtBitset::RtBitset()
+{
+
+    this->length = len;
+    this->byteLength = (len / 8) + (len % 8 == 0 ? 0 : 1);
+
+
+    /*
+    //zeroes out the char array
+    for (unsigned int i = 0; i < byteLength; i++)
+    {
+        this->content[i] = 0x00;
+    }
+    */
+};
+
+bool RtBitset::Reallocate(unsigned int len)
+{
+    this->content = (unsigned char*)realloc(this->content, len);
+    return (this->content != nullptr);
+}
 RtBitset::~RtBitset()
 {
     delete this->content;

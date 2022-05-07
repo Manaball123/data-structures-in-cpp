@@ -11,21 +11,20 @@ using namespace std;
 
 
 
-
 //-------------------------NODE------------------------
 
 HMNode::HMNode()
 {
-	this->true_ptr = 0;
-	this->false_ptr = 0;
+	this->true_ptr = 0xffffffff;
+	this->false_ptr = 0xffffffff;
 	this->dataIndex = 0xffffffff;
 }
 
 
 HMNode::HMNode(unsigned int dataIndex)
 {
-	this->true_ptr = 0;
-	this->false_ptr = 0;
+	this->true_ptr = 0xffffffff;
+	this->false_ptr = 0xffffffff;
 	this->dataIndex = dataIndex;
 }
 
@@ -37,6 +36,20 @@ HMNode::HMNode(unsigned int true_ptr, unsigned int false_ptr)
 }
 
 //----------------------TREE----------------------------------
+
+
+void HMTree::ConstructMap(BS::RtBitset* bs_ptr, unsigned int position)
+{
+	if (this->nodes[position]->dataIndex == 0xffffffff)
+	{
+		this->ConstructMap(bs_ptr, this->nodes[position].true_ptr);
+		this->ConstructMap(bs_ptr, this->nodes[position].false_ptr);
+	}
+	else
+	{
+		bs_ptr[this->nodes[position].dataIndex]
+	}
+}
 
 
 BS::RtBitset* HMTree::Encode(void* data, unsigned int dataSize, unsigned int dataLength)
@@ -104,24 +117,35 @@ BS::RtBitset* HMTree::Encode(void* data, unsigned int dataSize, unsigned int dat
 
 	//
 	//Construct a linked list and create the nodes, according to data
-	//In the order of probability of appearence(I.E: most common as node 0, etc etc)
-	//Create the linked list first
-	//Double for speed
+
+	//Also data is stored seprately, in an array
+	//It is accessed via indexes stored in dataIndex
 
 
 	//btw the endpoints should be at around 0, and the root should be the last node in the array
 	unsigned int requiredNodes = 1 + 2 * (dataVec.size() - 1);
-	//Create array of nodes
+
+	//Creates array of nodes
 	this->nodes = new HMNode[requiredNodes];
 	
 	//Create list with probability
 	STLinkedListD<unsigned int> probabilityOrdered = STLinkedListD<unsigned int>(0);
 	//This saves index of nodes of probablity saved above
 	STLinkedListD<unsigned int> nodeIndexes = STLinkedListD<unsigned int>(0);
-	for (unsigned int i = 0; i < dataVec.size(); i++)
-	{
 
+	//Initialize the lists first
+	probabilityOrdered.SequencedInsert(dataOccurences[0]);
+	//Remove the element on index 0(0) as it is actually unused
+	probabilityOrdered.Remove(0);
+	
+
+	for (unsigned int i = 1; i < dataVec.size(); i++)
+	{
+		probabilityOrdered.SequencedInsert(dataOccurences[i]);
+		nodeIndexes.Push(i);
 	}
+	
+
 	
 	
 
@@ -133,12 +157,23 @@ BS::RtBitset* HMTree::Encode(void* data, unsigned int dataSize, unsigned int dat
 		this->nodes[i].dataIndex = i;
 	}
 	//Iterates through the remaining nodes, grouping ones with small weights together
-	for (unsigned int i = 0; i < requiredNodes - dataVec.size(); i++)
+	for (unsigned int i = dataVec.size(); i < requiredNodes; i++)
 	{
-
+		this->nodes[i].false_ptr = nodeIndexes[0];
+		this->nodes[i].true_ptr = nodeIndexes[1];
+		unsigned int combinedProb = probabilityOrdered[0] + probabilityOrdered[1];
+		probabilityOrdered.Retract();
+		probabilityOrdered.Retract();
+		nodeIndexes.Retract();
+		nodeIndexes.Retract();
+		nodeIndexes.Insert(i, probabilityOrdered.SequencedInsert(combinedProb) - 1);
 	}
+	//All nodes SHOULD be populated at this point
 
-
+	//Now we'll work on compressing the data
+	//Creates a "map" that uses the index of data as keys, and a bitset as the value
+	
+	BS::RtBitset* bs_arr = new BS::RtBitset[10];
 	return new BS::RtBitset(1);
 }
 

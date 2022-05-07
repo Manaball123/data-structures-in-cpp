@@ -7,6 +7,7 @@
 //huffman encoding thing
 namespace HMENC
 {
+
 	class HMNode
 	{
 
@@ -52,9 +53,11 @@ namespace HMENC
 
 		HMTree();
 
+		
 		//Constructs the tree, returns the compressed data
 		BS::RtBitset* Encode(void* data, unsigned int dataSize, unsigned int dataLength);
-
+		//Recursive function that constructs an array of bitsets
+		void ConstructMap(BS::RtBitset* bs_ptr, unsigned int position, unsigned int counter);
 		
 		char* Decode();
 	};
