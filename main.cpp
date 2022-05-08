@@ -10,6 +10,7 @@
 #include "linked_list_st_d.h"
 #include "linked_list_st_s.h"
 #include "raw_data.h"
+#include "huffman_encoding.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ using namespace ATLLS;
 using namespace STLLD;
 using namespace STLLS;
 using namespace RD;
+using namespace HMENC;
 
 void FillArr(unsigned short* arr)
 {
@@ -178,6 +180,7 @@ int main()
     while(1){}
     
     */
+    /*
     STLinkedListD<int> l1 = STLinkedListD<int>(1);
 
     l1.Push(2);
@@ -192,5 +195,43 @@ int main()
     cout << l1.SequencedInsert(0) << endl;
     
     l1.PrintList();
+    */
     
+    unsigned long data[] =
+    {
+        0xff,
+        0x01,
+        0x01,
+        0x02,
+        0x0f,
+        0x0f,
+        0x02,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x0f,
+        0xff,
+        0x01
+    };
+    unsigned int dataLen = sizeof(data) / sizeof(*data);
+    unsigned int dataSize = sizeof(*data);
+    unsigned long* decoded;
+    HMTree<unsigned long> t1 = HMTree<unsigned long>();
+    BS::RtBitset* bs = t1.Encode(data, 128);
+    
+    HMTree<unsigned long> t2 = HMTree<unsigned long>();
+    t2.dataDict = t1.dataDict;
+    t2.nodes = t1.nodes;
+    decoded = t2.Decode(bs, dataLen);
+
+    for (int i = 0; i < dataLen; i++)
+    {
+        cout << "Data: " << data[i];
+        cout << "  Parsed: " << decoded[i] << endl;
+    }
+
+     
 }

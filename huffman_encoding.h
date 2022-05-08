@@ -1,15 +1,13 @@
 #pragma once
 
 
-#include "runtime_bs.h"
-#include "raw_data.h"
+//#include "runtime_bs.h"
 #include <stdlib.h>
 #include <vector>
 #include <unordered_map>
 #include "linked_list_st_d.h"
 
 
-using namespace HMENC;
 using namespace STLLD;
 using namespace std;
 
@@ -79,15 +77,13 @@ namespace HMENC
 		//Constructs the tree, returns the compressed data
 		//BS::RtBitset* Encode(void* data, unsigned int dataSize, unsigned int dataLength);
 		//Recursive function that constructs an array of bitsets
-		//void ConstructMap(BS::RtBitset* bs_ptr, unsigned int position, BS::RtBitset* currentPattern);
-		
-		dtype* Decode();
+
 
 
 		//----------------------TREE----------------------------------
 		HMTree()
 		{
-
+		
 		};
 
 		//Recursively creates a key-value pair
@@ -114,8 +110,6 @@ namespace HMENC
 
 		BS::RtBitset* Encode(dtype* data, unsigned int length)
 		{
-			unsigned int unique_ctr = 0;
-			char* data_ptr = (char*)data;
 			//temporary data dictionary
 			vector<dtype> dataVec;
 			vector<unsigned int> dataOccurences;
@@ -189,9 +183,9 @@ namespace HMENC
 			//Also data is stored seprately, in an array
 			//It is accessed via indexes stored in dataIndex
 
-
+			unsigned int uniquesLength = dataVec.size();
 			//btw the endpoints should be at around 0, and the root should be the last node in the array
-			unsigned int requiredNodes = 1 + 2 * (dataVec.size() - 1);
+			unsigned int requiredNodes = 1 + 2 * (uniquesLength - 1);
 
 			//Creates array of nodes
 			this->nodes = new HMNode[requiredNodes];
@@ -209,28 +203,24 @@ namespace HMENC
 			//REORDER all the nodes first
 			//Note that the order in dataVec is unordered
 			
-			for (unsigned int i = 1; i < dataVec.size(); i++)
+			for (unsigned int i = 1; i < uniquesLength; i++)
 			{
-				probabilityOrdered.SequencedInsert(dataOccurences[i]);
-				nodeIndexes.Push(i);
+				nodeIndexes.Insert(i, probabilityOrdered.SequencedInsert(dataOccurences[i]) - 1);
 			}
 			//this contains all the nodes probability, ordered
-			dtype* probArr = probabilityOrdered.GetArrayRepr();
+			unsigned int* probArr = probabilityOrdered.GetArrayRepr();
 			//index should be from 0 to datavec.size() - 1
-			
-			
-
-
+			this->dataDict = dataVec.data();
 
 
 			//Initialize the endpoints(ones that contains actual values)
 			//(also constructs the "weights" list
-			for (unsigned int i = 0; i < dataVec.size(); i++)
+			for (unsigned int i = 0; i < uniquesLength; i++)
 			{
 				this->nodes[i].dataIndex = i;
 			}
 			//Iterates through the remaining nodes, grouping ones with small weights together
-			for (unsigned int i = dataVec.size(); i < requiredNodes; i++)
+			for (unsigned int i = uniquesLength; i < requiredNodes; i++)
 			{
 				this->nodes[i].false_ptr = nodeIndexes[0];
 				this->nodes[i].true_ptr = nodeIndexes[1];
@@ -254,18 +244,18 @@ namespace HMENC
 			//Total bits required 
 			unsigned int totalBits = 0;
 
-			for (unsigned int i = 0; i < dataVec.size(); i++)
+			for (unsigned int i = 0; i < uniquesLength; i++)
 			{
 				//Create a key-value pair
 				datamap[dataVec[i]] = bs_arr + i;
-				totalBits += *(bs_arr + i)->length * probArr[i]
+				totalBits += *(bs_arr + i)->length * probArr[i];
 			}
 			//Create the output bitset
 			BS::RtBitset* output = new BS::RtBitset(totalBits);
 
 			//Iterate through all elements
 			unsigned int position = 0;
-			for (unsigned int i = 0; i < dataLength; i++)
+			for (unsigned int i = 0; i < length; i++)
 			{
 				//Find the current pattern
 				BS::RtBitset* currPattern = datamap.find(data[i]);
@@ -283,7 +273,40 @@ namespace HMENC
 			return output;
 		}
 
-
+		//Make sure to point nodes to a node tree(node array) and place in datadict before decoding
+		dtype* Decode(BS::RtBitset* bs, unsigned int length)
+		{
+			dtype* output = new dtype[length];
+			unsigned int bit_ctr = 0;
+			//iterate through all elements
+			for (unsigned int i = 0; i < length; i++)
+			{
+				//The root is always at the end due to how the map is constructed
+				unsigned int nodeAddr = (sizeof(this->nodes) / sizeof(HMNode) - 1);
+				bool found = 0;
+				while (!found)
+				{
+					if (this->nodes[nodeAddr].dataIndex != 0xffffffff)
+					{
+						found = 1;
+						output[i] = this->dataDict[i];
+					}
+					else
+					{
+						if (bs->operator[](bit_ctr))
+						{
+							bit_ctr++;
+							nodeAddr = this->nodes[nodeAddr].true_ptr;
+						}
+						else
+						{
+							bit_ctr++;
+							nodeAddr = this->nodes[nodeAddr].false_ptr;
+						}
+					}
+				}
+			}
+		}
 
 	};
 

@@ -386,7 +386,6 @@ void RtBitset::Compress(
     using namespace std;
     //cast the pointer to an unsigned char
     char* data_ptr = (char*)data;
-    char a;
 
     //bytes to check per element
     unsigned int checkedBytes = (compressedSize / 8) + ((compressedSize % 8) == 0 ? 0 : 1);
