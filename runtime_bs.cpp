@@ -18,7 +18,7 @@ RtBitset::RtBitset(unsigned int len)
     this->length = len;
     this->byteLength = (len / 8) + (len % 8 == 0 ? 0 : 1);
     //I hope this works, though it might not
-    this->content = (unsigned char*)calloc(sizeof(char) , byteLength);
+    this->content = (unsigned char*)calloc(sizeof(char) , this->byteLength);
 
     /*
     //zeroes out the char array
@@ -31,8 +31,9 @@ RtBitset::RtBitset(unsigned int len)
 RtBitset::RtBitset()
 {
 
-    this->length = len;
-    this->byteLength = (len / 8) + (len % 8 == 0 ? 0 : 1);
+    this->length = 0;
+    this->byteLength = 0;
+    this->content = (unsigned char*)calloc(sizeof(char), 0);
 
 
     /*
@@ -43,11 +44,31 @@ RtBitset::RtBitset()
     }
     */
 };
+RtBitset::RtBitset(RtBitset* bs)
+{
+    this->length = bs->length;
+    this->byteLength = bs->byteLength;
+    this->content = (unsigned char*)calloc(sizeof(char), this->byteLength);
+    for (unsigned int i = 0; i < byteLength; i++)
+    {
+        *(this->content + i) = *(bs->content + i);
+    }
+}
 
 bool RtBitset::Reallocate(unsigned int len)
 {
-    this->content = (unsigned char*)realloc(this->content, len);
-    return (this->content != nullptr);
+    
+    unsigned char* newmem_ptr = (unsigned char*)realloc(this->content, len);
+
+    if (newmem_ptr != nullptr)
+    {
+        this->content = newmem_ptr;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 RtBitset::~RtBitset()
 {

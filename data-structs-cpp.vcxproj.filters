@@ -66,9 +66,6 @@
     <ClCompile Include="binary-tree-node.cpp">
       <Filter>Source Files\BinaryTree</Filter>
     </ClCompile>
-    <ClCompile Include="huffman_encoding.cpp">
-      <Filter>Source Files\HuffmanEncoding</Filter>
-    </ClCompile>
     <ClCompile Include="linked_list_at_d.cpp">
       <Filter>Source Files\LinkedList\ArbitraryType\Double</Filter>
     </ClCompile>

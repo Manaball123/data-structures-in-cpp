@@ -390,5 +390,20 @@ namespace STLLD
 			}
 			std::cout << currentNode->data << "]\n";
 		}
+		//Export the data into an array
+		dtype* GetArrayRepr()
+		{
+			
+			dtype* arr_ptr = new dtype[this->length];
+
+			STLLNodeD<dtype>* currentNode = this->rootNode;
+			arr_ptr[0] = currentNode->data;
+			for (unsigned int i = 1;i < this->length; i++)
+			{
+				currentNode = currentNode->next;
+				arr_ptr[i] = currentNode->data;
+			}
+			return arr_ptr;
+		}
 	};
 }

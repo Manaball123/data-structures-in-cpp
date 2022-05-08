@@ -10,6 +10,7 @@ namespace BS
 
         public:
             RtBitset(unsigned int len);
+            RtBitset(RtBitset* bs);
             RtBitset();
             ~RtBitset();
             //pointer to content on heap
