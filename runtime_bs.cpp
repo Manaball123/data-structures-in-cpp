@@ -33,7 +33,7 @@ RtBitset::RtBitset()
 
     this->length = 0;
     this->byteLength = 0;
-    this->content = (unsigned char*)calloc(sizeof(char), 0);
+    this->content = (unsigned char*)calloc(sizeof(char), 1);
 
 
     /*
@@ -51,18 +51,59 @@ RtBitset::RtBitset(RtBitset* bs)
     this->content = (unsigned char*)calloc(sizeof(char), this->byteLength);
     for (unsigned int i = 0; i < byteLength; i++)
     {
-        *(this->content + i) = *(bs->content + i);
+        this->content[i] = bs->content[i];
     }
 }
 
 bool RtBitset::Reallocate(unsigned int len)
 {
+    unsigned int newByteLength = (len / 8) + (len % 8 == 0 ? 0 : 1);
+    unsigned char* newmem_ptr = (unsigned char*)realloc(this->content, newByteLength);
+
     
-    unsigned char* newmem_ptr = (unsigned char*)realloc(this->content, len);
 
     if (newmem_ptr != nullptr)
     {
+        //Zero out the new mem block
+        //This is only needed for debug purposes
+        for (unsigned int i = 0; i < newByteLength; i++)
+        {
+            newmem_ptr[i] = 0x00;
+        }
+        //copy all bytes over to new position
+        for (unsigned int i = 0; i < this->byteLength; i++)
+        {
+            newmem_ptr[i] = *(this->content + i);
+        }
         this->content = newmem_ptr;
+        this->length = len;
+        this->byteLength = newByteLength;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+bool RtBitset::Copy(RtBitset* bs)
+{
+    this->length = bs->length;
+    this->byteLength = bs->byteLength;
+    //this->content = (unsigned char*)realloc(this->content, bs->byteLength);
+    unsigned char* newmem_ptr = (unsigned char*)realloc(this->content, bs->byteLength);
+    
+    if (newmem_ptr != nullptr)
+    {
+
+        this->content = newmem_ptr;
+        this->length = bs->length;
+        this->byteLength = bs->byteLength;
+        //Copy over the content
+        for (unsigned int i = 0; i < this->byteLength; i++)
+        {
+            this->content[i] = bs->content[i];
+        }
         return 1;
     }
     else
@@ -72,7 +113,7 @@ bool RtBitset::Reallocate(unsigned int len)
 }
 RtBitset::~RtBitset()
 {
-    delete this->content;
+    delete [] this->content;
 }
 
 bool RtBitset::GetBit(unsigned int byteIndex, unsigned short bitIndex)
@@ -155,6 +196,7 @@ void RtBitset::ToggleBits(unsigned int start, unsigned int end)
     }
 
 }
+
 
 //The code below is trash(in the sense that it doesn't make sense), I tried my best to explain it tho
 //Also I hate bitwise(kinda)

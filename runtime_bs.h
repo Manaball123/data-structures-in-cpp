@@ -1,18 +1,18 @@
-
-#include "stdlib.h"
+#pragma once
 //bitset allocated at runtime
 namespace BS
 {
     class RtBitset
     {
        
-        
-
+       
         public:
             RtBitset(unsigned int len);
             RtBitset(RtBitset* bs);
             RtBitset();
             ~RtBitset();
+            bool Reallocate(unsigned int len);
+            bool Copy(RtBitset* bs);
             //pointer to content on heap
             unsigned char* content;
 
@@ -77,7 +77,7 @@ namespace BS
                 unsigned int compressedSize   //Unit size of compressed elemnts
             );
 
-            bool Reallocate(unsigned int len);
+            
 
 
     };

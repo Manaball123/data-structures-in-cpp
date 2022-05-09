@@ -141,7 +141,7 @@ namespace STLLD
 		//Removes element at the end
 		void Pop()
 		{
-			STLLNodeD* end_ptr = this->endNode;
+			STLLNodeD<dtype>* end_ptr = this->endNode;
 			this->endNode = this->endNode->prev;
 			this->endNode->next = nullptr;
 			delete end_ptr;
@@ -167,9 +167,9 @@ namespace STLLD
 		//remove element at the front
 		void Retract()
 		{
-			STLLNodeD* root_ptr = this->rootNode;
-			this->endNode = this->endNode->next;
-			this->endNode->prev = nullptr;
+			STLLNodeD<dtype>* root_ptr = this->rootNode;
+			this->rootNode = this->rootNode->next;
+			this->rootNode->prev = nullptr;
 			delete root_ptr;
 
 			this->length--;
@@ -180,21 +180,25 @@ namespace STLLD
 		//Insert after 0xffffffff to insert before index 0
 		void Insert(dtype data, unsigned int index)
 		{
-			if (index > this->length)
+			if (index == 0xffffffff)
+			{
+
+				this->Extend(data);
+				return;
+
+			}
+			else if (index >= this->length)
 			{
 				return;
 			}
 
-			else if (index == this->length)
+			else if (index == this->length - 1)
 			{
 				this->Push(data);
 				return;
 			}
-			else if (index == 0xffffffff)
-			{
-				this->Extend(data);
-				return;
-			}
+
+
 
 			else
 			{
@@ -238,7 +242,10 @@ namespace STLLD
 
 				STLLNodeD<dtype>* newNode = new STLLNodeD<dtype>(data);
 				//Reassigns the next node's previous pointer
+
 				currentNode->next->prev = newNode;
+				
+				
 				//Assigns the new node's next pointer to the next node
 				newNode->next = currentNode->next;
 				newNode->prev = currentNode;
@@ -258,12 +265,12 @@ namespace STLLD
 		//Removes element at index
 		void Remove(unsigned int index)
 		{
-			if (index > this->length)
+			if (index >= this->length)
 			{
 				return;
 			}
 
-			else if (index == this->length)
+			else if (index == this->length - 1) 
 			{
 				this->Pop();
 				return;
@@ -331,6 +338,7 @@ namespace STLLD
 			STLLNodeD<dtype>* newNode = new STLLNodeD<dtype>(data);
 			//Reassigns the next node's previous pointer
 			node_ptr->next->prev = newNode;
+
 			//Assigns the new node's next pointer to the next node
 			newNode->next = node_ptr->next;
 			newNode->prev = node_ptr;
@@ -351,7 +359,7 @@ namespace STLLD
 			if (data < this->rootNode->data)
 			{
 				this->Extend(data);
-				return 0xffffffff;
+				return 0;
 			}
 			//Insert after end if value is bigger or equal to end
 			else if (data >= this->endNode->data)
@@ -370,7 +378,7 @@ namespace STLLD
 						if (currentNode->data <= data)
 						{
 							this->AddAfterNode(currentNode, data);
-							return i + 1;
+							return i;
 						}
 					}
 					currentNode = currentNode->next;

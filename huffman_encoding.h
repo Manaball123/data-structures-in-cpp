@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <unordered_map>
+#include "runtime_bs.h"
 #include "linked_list_st_d.h"
 
 
@@ -66,6 +67,7 @@ namespace HMENC
 	public:
 
 
+
 		//array contains the actual data for the thing to seach up
 		dtype* dataDict;
 
@@ -91,10 +93,11 @@ namespace HMENC
 		{
 			if ((this->nodes[position]).dataIndex == 0xffffffff)
 			{
+			
 				BS::RtBitset truePattern = BS::RtBitset(currentPattern);
 				BS::RtBitset falsePattern = BS::RtBitset(currentPattern);
-				truePattern.Reallocate(truePattern.length);
-				falsePattern.Reallocate(falsePattern.length);
+				truePattern.Reallocate(truePattern.length + 1);
+				falsePattern.Reallocate(falsePattern.length + 1);
 				truePattern.SetBit(truePattern.length - 1);
 				falsePattern.ClearBit(falsePattern.length - 1);
 
@@ -103,7 +106,7 @@ namespace HMENC
 			}
 			else
 			{
-				bs_ptr[this->nodes[position].dataIndex] = new BS::RtBitset(currentPattern);
+				bs_ptr[this->nodes[position].dataIndex].Copy(currentPattern);
 			}
 		}
 
@@ -122,6 +125,7 @@ namespace HMENC
 
 				//assume the value is indeed unique
 				bool unique = 1;
+				//cout << "Checking value " << data[i] << endl;
 				//compares data with every discovered value
 				for (unsigned int j = 0; j < dataVec.size() && unique; j++)
 				{
@@ -154,9 +158,10 @@ namespace HMENC
 					}
 
 					*/
-
+					//cout << "...against " << dataVec[j] << endl;
 					if (dataVec[j] == data[i])
 					{
+						//cout << "It is not unique. " << endl;
 						unique = 0;
 						dataOccurences[j]++;
 					}
@@ -164,9 +169,6 @@ namespace HMENC
 				//if the value is indeed unique after all the checks
 				if (unique)
 				{
-					//increment thing by 1
-					//THE TYPE ENFORCING EXPERIENCE
-					//POV: u cant preform pointer arithmetic on void but u can cast it to char and to void 
 					dataVec.push_back(data[i]);
 					//this should sync with the datavec index
 					dataOccurences.push_back(1);
@@ -203,16 +205,21 @@ namespace HMENC
 			//REORDER all the nodes first
 			//Note that the order in dataVec is unordered
 			
+
 			for (unsigned int i = 1; i < uniquesLength; i++)
 			{
+				//nodeIndexes.Insert(i, probabilityOrdered.SequencedInsert(dataOccurences[i]) - 1);
 				nodeIndexes.Insert(i, probabilityOrdered.SequencedInsert(dataOccurences[i]) - 1);
+				//cout << "inserted after index " << target << endl;
+				//probabilityOrdered.PrintList();
+				//nodeIndexes.PrintList();
 			}
 			//this contains all the nodes probability, ordered
 			unsigned int* probArr = probabilityOrdered.GetArrayRepr();
 			//index should be from 0 to datavec.size() - 1
 			this->dataDict = dataVec.data();
-
-
+			probabilityOrdered.PrintList();
+			nodeIndexes.PrintList();
 			//Initialize the endpoints(ones that contains actual values)
 			//(also constructs the "weights" list
 			for (unsigned int i = 0; i < uniquesLength; i++)
@@ -225,11 +232,16 @@ namespace HMENC
 				this->nodes[i].false_ptr = nodeIndexes[0];
 				this->nodes[i].true_ptr = nodeIndexes[1];
 				unsigned int combinedProb = probabilityOrdered[0] + probabilityOrdered[1];
-				probabilityOrdered.Retract();
-				probabilityOrdered.Retract();
-				nodeIndexes.Retract();
-				nodeIndexes.Retract();
 				nodeIndexes.Insert(i, probabilityOrdered.SequencedInsert(combinedProb) - 1);
+				
+				probabilityOrdered.Retract();
+				probabilityOrdered.Retract();
+				nodeIndexes.Retract();
+				nodeIndexes.Retract();
+				probabilityOrdered.PrintList();
+				nodeIndexes.PrintList();
+
+				
 			}
 			//All nodes SHOULD be populated at this point
 
@@ -237,7 +249,8 @@ namespace HMENC
 			//Creates a "map" that uses the index of data as keys, and a bitset as the value
 
 			BS::RtBitset* bs_arr = new BS::RtBitset[dataVec.size()];
-			ConstructMap(bs_arr, dataVec.size() - 1, &BS::RtBitset());
+			BS::RtBitset* tempBs = new BS::RtBitset();
+			ConstructMap(bs_arr, requiredNodes - 1, tempBs);
 			//Now make another map with raw data -> bitset
 			unordered_map<dtype, BS::RtBitset*> datamap;
 
@@ -247,8 +260,8 @@ namespace HMENC
 			for (unsigned int i = 0; i < uniquesLength; i++)
 			{
 				//Create a key-value pair
-				datamap[dataVec[i]] = bs_arr + i;
-				totalBits += *(bs_arr + i)->length * probArr[i];
+				datamap.insert(std::make_pair(dataVec[i], (bs_arr + i)));
+				totalBits += (((bs_arr + i)->length) * probArr[i]);
 			}
 			//Create the output bitset
 			BS::RtBitset* output = new BS::RtBitset(totalBits);
@@ -258,31 +271,36 @@ namespace HMENC
 			for (unsigned int i = 0; i < length; i++)
 			{
 				//Find the current pattern
-				BS::RtBitset* currPattern = datamap.find(data[i]);
+				
+				BS::RtBitset* currPattern = datamap[data[i]];
+				currPattern->PrintBitsF();
+				std::cout << data[i] << endl;
 				//Append this into the final output
 				for (unsigned int j = 0; j < currPattern->length; j++)
 				{
-					//TODO: Make the set{patern function and use that instead
-					if (currPattern[j])
+					//TODO: Make the set pattern function and use that instead
+					if (currPattern->operator[](j))
 					{
-						output.SetBit(position);
+						output->SetBit(position);
 					}
 					position++;
 				}
 			}
+			output->PrintBitsF();
 			return output;
 		}
 
 		//Make sure to point nodes to a node tree(node array) and place in datadict before decoding
 		dtype* Decode(BS::RtBitset* bs, unsigned int length)
 		{
+			bs->PrintBitsF();
 			dtype* output = new dtype[length];
 			unsigned int bit_ctr = 0;
 			//iterate through all elements
 			for (unsigned int i = 0; i < length; i++)
 			{
 				//The root is always at the end due to how the map is constructed
-				unsigned int nodeAddr = (sizeof(this->nodes) / sizeof(HMNode) - 1);
+				unsigned int nodeAddr = (sizeof(this->nodes) / sizeof(HMNode)) - 1;
 				bool found = 0;
 				while (!found)
 				{
@@ -293,6 +311,7 @@ namespace HMENC
 					}
 					else
 					{
+						
 						if (bs->operator[](bit_ctr))
 						{
 							bit_ctr++;
@@ -306,7 +325,10 @@ namespace HMENC
 					}
 				}
 			}
+			return output;
 		}
+
+		
 
 	};
 
