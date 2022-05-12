@@ -271,8 +271,10 @@ namespace HMENC
 				this->nodes[i].false_ptr = nodeIndexes[0];
 				this->nodes[i].true_ptr = nodeIndexes[1];
 				unsigned int combinedProb = probabilityOrdered[0] + probabilityOrdered[1];
+			
 				nodeIndexes.Insert(i, probabilityOrdered.SequencedInsert(combinedProb) - 1);
 				
+				//Delete the 2 used up nodes from both lists
 				probabilityOrdered.Retract();
 				probabilityOrdered.Retract();
 				nodeIndexes.Retract();
@@ -287,7 +289,9 @@ namespace HMENC
 			//Now we'll work on compressing the data
 			//Creates a "map" that uses the index of data as keys, and a bitset as the value
 
+			//The array that keeps track of all patterns
 			BS::RtBitset* bs_arr = new BS::RtBitset[dataVec.size()];
+			//This will be copied a lot, as a new instance is created for each branch of the tree
 			BS::RtBitset* tempBs = new BS::RtBitset();
 			ConstructMap(bs_arr, requiredNodes - 1, tempBs);
 			//Now make another map with raw data -> bitset
@@ -352,21 +356,25 @@ namespace HMENC
 				bool found = 0;
 				while (!found)
 				{
+					//If the node is an end node then look up the data based on the end node's index
 					if (this->nodes[nodeAddr].dataIndex != 0xffffffff)
 					{
 						found = 1;
 						output[i] = this->dataDict[this->nodes[nodeAddr].dataIndex];
 					}
+					//Traverse the tree again if end isnt found
 					else
 					{
-						
+						//Read the next bit
 						if (bs->operator[](bit_ctr))
 						{
+							//Go to the "true" side if a true value is found
 							bit_ctr++;
 							nodeAddr = this->nodes[nodeAddr].true_ptr;
 						}
 						else
 						{
+							//Vice versa
 							bit_ctr++;
 							nodeAddr = this->nodes[nodeAddr].false_ptr;
 						}

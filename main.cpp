@@ -196,8 +196,15 @@ int main()
     
     l1.PrintList();
     */
-    //0xff, 0x01, 0x02, 0x0f, 0x00
-    //2     3      2     3     6
+    //HOW TO USE THIS:
+    //REQUIRED:
+    //   specify data type(obviously)
+    //   nodes and its length
+    //   dataDict and its length
+    //   encoded bitset(data and its length, ideally the whole object)
+    
+    //SENDER:
+    //Initialize the data to send
     unsigned long data[] =
     {
         0xff,
@@ -215,31 +222,52 @@ int main()
         0x00,
         0x0f,
         0xff,
-        0x01
+        0x01,
+        0x00,
+        0x01,
+        0x00,
+        0x00,
+        0x0f,
+        0x0f,
+        0xff,
+        0xff,
+        0x02
     };
 
+    //Get length of array
     unsigned int dataLen = sizeof(data) / sizeof(*data);
-   // cout << dataLen << endl;
-    unsigned long* decoded;
+    
+    
+    //Create a new tree
     HMTree<unsigned long> t1 = HMTree<unsigned long>();
+
+    //Obtain the encoded data
     BS::RtBitset* bs = t1.Encode(data, dataLen);
     
+    //RECIEVER:
+    //Create an array to store the decoded data
+    unsigned long* decoded;
+    //Create a new tree again
     HMTree<unsigned long> t2 = HMTree<unsigned long>();
     
-    //t2.AllocateNodes(t1.GetNodesLength());
+    //Copy the recieved nodes and its length to the newly created tree object
     t2.CopyNodes(t1.nodesLength, t1.nodes);
-    t2.CopyDict(t1.nodesLength, t1.dataDict);
+    //Same thing but copying dict instead
+    t2.CopyDict(t1.dictLength, t1.dataDict);
 
-
+    //Store the decoded data to the array
     decoded = t2.Decode(bs, dataLen);
 
+    //Comparison between sent and recieved data(should be the same)
+    /*
+    
     for (unsigned int i = 0; i < dataLen; i++)
     {
         cout << "Data: " << data[i];
         cout << "  Parsed: " << decoded[i] << endl;
     }
     cout << "END" << endl;
-     //a
+    */
     return 0;
 }
 
