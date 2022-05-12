@@ -17,46 +17,7 @@ using namespace std;
 namespace HMENC
 {
 
-	class HMNode
-	{
-
-	public:
-
-		//-------------------------NODE------------------------
-
-		HMNode()
-		{
-			this->true_ptr = 0xffffffff;
-			this->false_ptr = 0xffffffff;
-			this->dataIndex = 0xffffffff;
-		}
-
-
-		HMNode(unsigned int dataIndex)
-		{
-			this->true_ptr = 0xffffffff;
-			this->false_ptr = 0xffffffff;
-			this->dataIndex = dataIndex;
-		}
-
-		HMNode(unsigned int true_ptr, unsigned int false_ptr)
-		{
-			this->true_ptr = true_ptr;
-			this->false_ptr = false_ptr;
-			this->dataIndex = 0xffffffff;
-		}
-
-		//THESE ARE NOT POINTERS!!!!!!!!!
-		//THESE ARE OFFSETS FOR THE NODES ARRAY
-		unsigned int true_ptr;
-		unsigned int false_ptr;
-
-		//array declared in the actual tree class
-		//NOTE: this only needs to be initialized if this node is an end node
-		//initialize this to 0xffffffff if the node is not an end node
-		unsigned int dataIndex;
-
-	};
+	
 
 
 	//le huffman binary tree thingy
@@ -65,6 +26,47 @@ namespace HMENC
 	{
 
 	public:
+
+		class HMNode
+		{
+
+		public:
+
+			//-------------------------NODE------------------------
+
+			HMNode()
+			{
+				this->true_ptr = 0xffffffff;
+				this->false_ptr = 0xffffffff;
+				this->dataIndex = 0xffffffff;
+			}
+
+
+			HMNode(unsigned int dataIndex)
+			{
+				this->true_ptr = 0xffffffff;
+				this->false_ptr = 0xffffffff;
+				this->dataIndex = dataIndex;
+			}
+
+			HMNode(unsigned int true_ptr, unsigned int false_ptr)
+			{
+				this->true_ptr = true_ptr;
+				this->false_ptr = false_ptr;
+				this->dataIndex = 0xffffffff;
+			}
+
+			//THESE ARE NOT POINTERS!!!!!!!!!
+			//THESE ARE OFFSETS FOR THE NODES ARRAY
+			unsigned int true_ptr;
+			unsigned int false_ptr;
+
+			//array declared in the actual tree class
+			//NOTE: this only needs to be initialized if this node is an end node
+			//initialize this to 0xffffffff if the node is not an end node
+			unsigned int dataIndex;
+
+		};
 
 
 
@@ -75,6 +77,8 @@ namespace HMENC
 		//Pointer to array of nodes
 		//You can decode by creating an empty class and replacing this with the thing you recieved
 		HMNode* nodes;
+		unsigned int nodesLength;
+		unsigned int dictLength;
 	
 		//Constructs the tree, returns the compressed data
 		//BS::RtBitset* Encode(void* data, unsigned int dataSize, unsigned int dataLength);
@@ -87,6 +91,35 @@ namespace HMENC
 		{
 		
 		};
+		~HMTree()
+		{
+			delete[] this->nodes;
+			delete[] this->dataDict;
+		}
+
+		//
+		/*
+		void AllocateNodes(unsigned int length)
+		{
+			this->nodes = new HMNode[length];
+			this->nodesLength = length;
+		}
+		*/
+		void CopyNodes(unsigned int length, HMNode* ptr)
+		{
+			this->nodes = new HMNode[length];
+			std::copy(ptr, ptr + length, this->nodes);
+			this->nodesLength = length;
+		}
+
+		void CopyDict(unsigned int length, dtype* dict)
+		{
+			this->dataDict = new dtype[length];
+			std::copy(dict, dict + length, this->dataDict);
+		}
+
+
+		
 
 		//Recursively creates a key-value pair
 		void ConstructMap(BS::RtBitset* bs_ptr, unsigned int position, BS::RtBitset* currentPattern)
@@ -94,15 +127,15 @@ namespace HMENC
 			if ((this->nodes[position]).dataIndex == 0xffffffff)
 			{
 			
-				BS::RtBitset truePattern = BS::RtBitset(currentPattern);
-				BS::RtBitset falsePattern = BS::RtBitset(currentPattern);
-				truePattern.Reallocate(truePattern.length + 1);
-				falsePattern.Reallocate(falsePattern.length + 1);
-				truePattern.SetBit(truePattern.length - 1);
-				falsePattern.ClearBit(falsePattern.length - 1);
+				BS::RtBitset* truePattern = new BS::RtBitset(currentPattern);
+				BS::RtBitset* falsePattern = new BS::RtBitset(currentPattern);
+				truePattern->Reallocate(truePattern->length + 1);
+				falsePattern->Reallocate(falsePattern->length + 1);
+				truePattern->SetBit(truePattern->length - 1);
+				falsePattern->ClearBit(falsePattern->length - 1);
 
-				this->ConstructMap(bs_ptr, this->nodes[position].true_ptr, &truePattern);
-				this->ConstructMap(bs_ptr, this->nodes[position].false_ptr, &falsePattern);
+				this->ConstructMap(bs_ptr, this->nodes[position].true_ptr, truePattern);
+				this->ConstructMap(bs_ptr, this->nodes[position].false_ptr, falsePattern);
 			}
 			else
 			{
@@ -186,11 +219,13 @@ namespace HMENC
 			//It is accessed via indexes stored in dataIndex
 
 			unsigned int uniquesLength = dataVec.size();
+			this->dictLength = uniquesLength;
 			//btw the endpoints should be at around 0, and the root should be the last node in the array
 			unsigned int requiredNodes = 1 + 2 * (uniquesLength - 1);
 
 			//Creates array of nodes
 			this->nodes = new HMNode[requiredNodes];
+			this->nodesLength = requiredNodes;
 
 			//Create list with probability
 			STLinkedListD<unsigned int> probabilityOrdered = STLinkedListD<unsigned int>(0);
@@ -217,9 +252,13 @@ namespace HMENC
 			//this contains all the nodes probability, ordered
 			unsigned int* probArr = probabilityOrdered.GetArrayRepr();
 			//index should be from 0 to datavec.size() - 1
-			this->dataDict = dataVec.data();
-			probabilityOrdered.PrintList();
-			nodeIndexes.PrintList();
+
+			//Copies contents from the vector to the array
+			this->dataDict = new dtype[uniquesLength];
+			std::copy(dataVec.begin(), dataVec.end(), dataDict);
+
+			//probabilityOrdered.PrintList();
+			//nodeIndexes.PrintList();
 			//Initialize the endpoints(ones that contains actual values)
 			//(also constructs the "weights" list
 			for (unsigned int i = 0; i < uniquesLength; i++)
@@ -238,8 +277,8 @@ namespace HMENC
 				probabilityOrdered.Retract();
 				nodeIndexes.Retract();
 				nodeIndexes.Retract();
-				probabilityOrdered.PrintList();
-				nodeIndexes.PrintList();
+				//probabilityOrdered.PrintList();
+				//nodeIndexes.PrintList();
 
 				
 			}
@@ -262,6 +301,8 @@ namespace HMENC
 				//Create a key-value pair
 				datamap.insert(std::make_pair(dataVec[i], (bs_arr + i)));
 				totalBits += (((bs_arr + i)->length) * probArr[i]);
+				//cout << "data: " << dataVec[i] << " index: " << i << "bit len: " << bs_arr[i].length << "pattern: " << endl;
+				//bs_arr[i].PrintBitsF();
 			}
 			//Create the output bitset
 			BS::RtBitset* output = new BS::RtBitset(totalBits);
@@ -273,8 +314,13 @@ namespace HMENC
 				//Find the current pattern
 				
 				BS::RtBitset* currPattern = datamap[data[i]];
-				currPattern->PrintBitsF();
-				std::cout << data[i] << endl;
+				//std::cout << "data: " << data[i] << endl;
+				//cout << "pattern length" << currPattern->length << ", pattern used : \n";
+				
+				
+				//currPattern->PrintBitsF();
+				
+				
 				//Append this into the final output
 				for (unsigned int j = 0; j < currPattern->length; j++)
 				{
@@ -286,28 +332,30 @@ namespace HMENC
 					position++;
 				}
 			}
-			output->PrintBitsF();
+			//cout << "final";
+			//output->PrintBitsF();
 			return output;
 		}
 
 		//Make sure to point nodes to a node tree(node array) and place in datadict before decoding
 		dtype* Decode(BS::RtBitset* bs, unsigned int length)
 		{
-			bs->PrintBitsF();
+			//bs->PrintBitsF();
 			dtype* output = new dtype[length];
 			unsigned int bit_ctr = 0;
 			//iterate through all elements
+
 			for (unsigned int i = 0; i < length; i++)
 			{
 				//The root is always at the end due to how the map is constructed
-				unsigned int nodeAddr = (sizeof(this->nodes) / sizeof(HMNode)) - 1;
+				unsigned int nodeAddr = this->nodesLength - 1;
 				bool found = 0;
 				while (!found)
 				{
 					if (this->nodes[nodeAddr].dataIndex != 0xffffffff)
 					{
 						found = 1;
-						output[i] = this->dataDict[i];
+						output[i] = this->dataDict[this->nodes[nodeAddr].dataIndex];
 					}
 					else
 					{

@@ -197,6 +197,7 @@ int main()
     l1.PrintList();
     */
     //0xff, 0x01, 0x02, 0x0f, 0x00
+    //2     3      2     3     6
     unsigned long data[] =
     {
         0xff,
@@ -218,14 +219,18 @@ int main()
     };
 
     unsigned int dataLen = sizeof(data) / sizeof(*data);
-    cout << dataLen << endl;
+   // cout << dataLen << endl;
     unsigned long* decoded;
     HMTree<unsigned long> t1 = HMTree<unsigned long>();
     BS::RtBitset* bs = t1.Encode(data, dataLen);
     
     HMTree<unsigned long> t2 = HMTree<unsigned long>();
-    t2.dataDict = t1.dataDict;
-    t2.nodes = t1.nodes;
+    
+    //t2.AllocateNodes(t1.GetNodesLength());
+    t2.CopyNodes(t1.nodesLength, t1.nodes);
+    t2.CopyDict(t1.nodesLength, t1.dataDict);
+
+
     decoded = t2.Decode(bs, dataLen);
 
     for (unsigned int i = 0; i < dataLen; i++)
@@ -233,6 +238,8 @@ int main()
         cout << "Data: " << data[i];
         cout << "  Parsed: " << decoded[i] << endl;
     }
-
+    cout << "END" << endl;
      //a
+    return 0;
 }
+

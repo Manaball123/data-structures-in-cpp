@@ -58,23 +58,19 @@ RtBitset::RtBitset(RtBitset* bs)
 bool RtBitset::Reallocate(unsigned int len)
 {
     unsigned int newByteLength = (len / 8) + (len % 8 == 0 ? 0 : 1);
-    unsigned char* newmem_ptr = (unsigned char*)realloc(this->content, newByteLength);
+    unsigned char* newmem_ptr = (unsigned char*)calloc(sizeof(char), newByteLength);
 
     
 
     if (newmem_ptr != nullptr)
     {
-        //Zero out the new mem block
-        //This is only needed for debug purposes
-        for (unsigned int i = 0; i < newByteLength; i++)
-        {
-            newmem_ptr[i] = 0x00;
-        }
-        //copy all bytes over to new position
+        //Copy all bytes over to new position
         for (unsigned int i = 0; i < this->byteLength; i++)
         {
             newmem_ptr[i] = *(this->content + i);
         }
+
+        delete[] this->content;
         this->content = newmem_ptr;
         this->length = len;
         this->byteLength = newByteLength;
@@ -88,22 +84,23 @@ bool RtBitset::Reallocate(unsigned int len)
 
 bool RtBitset::Copy(RtBitset* bs)
 {
-    this->length = bs->length;
-    this->byteLength = bs->byteLength;
     //this->content = (unsigned char*)realloc(this->content, bs->byteLength);
-    unsigned char* newmem_ptr = (unsigned char*)realloc(this->content, bs->byteLength);
+    unsigned char* newmem_ptr = (unsigned char*)calloc(sizeof(char), bs->byteLength);
     
     if (newmem_ptr != nullptr)
     {
 
-        this->content = newmem_ptr;
+        
         this->length = bs->length;
         this->byteLength = bs->byteLength;
         //Copy over the content
         for (unsigned int i = 0; i < this->byteLength; i++)
         {
-            this->content[i] = bs->content[i];
+            newmem_ptr[i] = bs->content[i];
         }
+        delete[] this->content;
+        this->content = newmem_ptr;
+        
         return 1;
     }
     else
@@ -113,7 +110,7 @@ bool RtBitset::Copy(RtBitset* bs)
 }
 RtBitset::~RtBitset()
 {
-    delete [] this->content;
+    delete[] this->content;
 }
 
 bool RtBitset::GetBit(unsigned int byteIndex, unsigned short bitIndex)
