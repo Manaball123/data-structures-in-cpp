@@ -1,4 +1,4 @@
-#include "runtime_bs.h"
+#include "heap_bs.hpp"
 #include <stdlib.h>
 #include <math.h>
 #include <iostream>
