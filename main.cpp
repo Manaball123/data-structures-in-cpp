@@ -1,27 +1,12 @@
 #include <iostream>
 #include <stdlib.h>
-#include "runtime_bs.h"
-#include <cstddef>
-#include <iomanip>
-#include "binary-tree.h"
-#include <chrono>
-#include "linked_list_at_d.h"
-#include "linked_list_at_s.h"
-#include "linked_list_st_d.h"
-#include "linked_list_st_s.h"
-#include "raw_data.h"
-#include "huffman_encoding.h"
+#include "typedefs.hpp"
+
+import Bitset;
 
 using namespace std;
 
-using namespace BS;
-using namespace BT;
-using namespace ATLLD;
-using namespace ATLLS;
-using namespace STLLD;
-using namespace STLLS;
-using namespace RD;
-using namespace HMENC;
+using namespace DS;
 
 void FillArr(unsigned short* arr)
 {
@@ -233,6 +218,7 @@ int main()
         0xff,
         0x02
     };
+    /**
 
     //Get length of array
     unsigned int dataLen = sizeof(data) / sizeof(*data);
@@ -268,6 +254,12 @@ int main()
     }
     cout << "END" << endl;
     */
+
+    Bitset bs1(32);
+
+    bs1.SetBit(0);
+    //bs1.SetBit(0);
+    //cout << *((uint32*)(bs1.content));
     return 0;
 }
 

@@ -142,7 +142,7 @@
   <ItemGroup>
     <ClCompile Include="binary-tree-node.cpp" />
     <ClCompile Include="binary-tree.cpp" />
-    <ClCompile Include="heap_bitset.ixx" />
+    <ClCompile Include="Bitset.ixx" />
     <ClCompile Include="linked_list_at_d.cpp" />
     <ClCompile Include="linked_list_at_s.cpp" />
     <ClCompile Include="linked_list_st_s.cpp" />

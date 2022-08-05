@@ -75,7 +75,7 @@
     <ClCompile Include="linked_list_st_s.cpp">
       <Filter>Source Files\LinkedList\StaticType\Single</Filter>
     </ClCompile>
-    <ClCompile Include="heap_bitset.ixx">
+    <ClCompile Include="Bitset.ixx">
       <Filter>Source Files\Bitset</Filter>
     </ClCompile>
   </ItemGroup>

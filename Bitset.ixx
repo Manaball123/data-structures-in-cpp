@@ -1,11 +1,15 @@
-export module heap_bitset;
+export module Bitset;
 
 #include "typedefs.hpp"
+//#include <stdlib.h>
+//#include <memory>
+
+
 //bitset allocated at runtime
 namespace DS
 {
     export
-    class HeapBitset
+    class Bitset
     {
 
 
@@ -22,30 +26,29 @@ namespace DS
         uint32 byteLength;
 
 
-        /// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        ///                                                                             IMPLEMENTATION BELOW
-        /// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        /// 
-        
+
+
 
         //Creates a bitset with bit length n
         //len: bit length of bitset
-        HeapBitset(uint32 len)
+        Bitset(uint32 len)
         {
 
             this->length = len;
             this->byteLength = (len / 8) + (len % 8 == 0 ? 0 : 1);
             this->content = new char[this->byteLength];
+            this->ClearMemory();
 
         };
 
         //Creates a bitset with size 0
-        HeapBitset()
+        Bitset()
         {
 
             this->length = 0;
             this->byteLength = 0;
-            this->content = new char[1];
+            this->content = nullptr;
+            //this->ClearMemory();
 
 
         };
@@ -53,15 +56,13 @@ namespace DS
 
         //Creates a new bitset and copies the content of the specified bitset over
         //bs: pointer to bitset with content
-        HeapBitset(HeapBitset* bs)
+        Bitset(Bitset* bs)
         {
             this->length = bs->length;
             this->byteLength = bs->byteLength;
             this->content = new char[byteLength];
-            for (unsigned int i = 0; i < byteLength; i++)
-            {
-                this->content[i] = bs->content[i];
-            }
+            
+            CopyMemory(this->content, bs->content, bs->byteLength);
         }
 
         //Expands the bitset to length n
@@ -76,10 +77,7 @@ namespace DS
             if (newmem_ptr != nullptr)
             {
                 //Copy all bytes over to new position
-                for (unsigned int i = 0; i < this->byteLength; i++)
-                {
-                    newmem_ptr[i] = *(this->content + i);
-                }
+                CopyMemory(newmem_ptr, this->content, this->byteLength);
 
                 delete[] this->content;
                 this->content = newmem_ptr;
@@ -94,7 +92,7 @@ namespace DS
         }
 
         //Copies content and other attributes from the specified bitset to the current bitset
-        bool Copy(HeapBitset* bs)
+        bool Copy(Bitset* bs)
         {
             char* newmem_ptr = new char[bs->byteLength];
 
@@ -105,10 +103,7 @@ namespace DS
                 this->length = bs->length;
                 this->byteLength = bs->byteLength;
                 //Copy over the content
-                for (uint32 i = 0; i < this->byteLength; i++)
-                {
-                    newmem_ptr[i] = bs->content[i];
-                }
+                CopyMemory(newmem_ptr, bs->content, bs->byteLength);
                 delete[] this->content;
                 this->content = newmem_ptr;
 
@@ -121,7 +116,7 @@ namespace DS
         }
 
         //Its just the destructor what do u want
-        ~HeapBitset()
+        ~Bitset()
         {
             delete[] this->content;
         }
@@ -426,11 +421,11 @@ namespace DS
 
 
         */
-
+        
         void Compress(
-            char* data_ptr,                                //Pointer to data(array) to compress
-            uint32 numElements,                  //Number of elements in the array
-            uint32 originalSize,                 //In bytes
+            char* data_ptr,                     //Pointer to data(array) to compress
+            uint32 numElements,                 //Number of elements in the array
+            uint32 originalSize,                //In bytes
             uint32 compressedSize               //BIT length of each data(use GetMinLength)
         )
         {
@@ -497,11 +492,12 @@ namespace DS
         }
         //Doesn't really belong here but whatever
         uint32 GetMinLength(
-            char* data_ptr,                       //pointer to array
+            void* data,                           //pointer to array
             uint32 dataSize,                      //byte size of element in array
             uint32 length                         //number of elements
         )
         {
+            char* data_ptr = (char*)data;
             //this works maybe
 
             uint32 iterator = dataSize * length;
@@ -625,6 +621,22 @@ namespace DS
 
             }
         }
+        private:
+            static void CopyMemory(void* dst, void* src, uint32 len)
+            {
+                for (uint32 i = 0; i < len; i++)
+                {
+                    ((char*)dst)[i] = ((char*)src)[i];
+                }
+            }
+            void ClearMemory()
+            {
+                for (uint32 i = 0; i < this->byteLength; i++)
+                {
+                    this->content[i] = 0x00;
+                }
+            }
+
 
 
 
