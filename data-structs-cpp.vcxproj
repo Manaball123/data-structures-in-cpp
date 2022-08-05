@@ -116,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,12 +142,12 @@
   <ItemGroup>
     <ClCompile Include="binary-tree-node.cpp" />
     <ClCompile Include="binary-tree.cpp" />
+    <ClCompile Include="heap_bitset.ixx" />
     <ClCompile Include="linked_list_at_d.cpp" />
     <ClCompile Include="linked_list_at_s.cpp" />
     <ClCompile Include="linked_list_st_s.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="raw_data.cpp" />
-    <ClCompile Include="runtime_bs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binary-tree-node.h" />
@@ -157,7 +158,6 @@
     <ClInclude Include="linked_list_st_d.h" />
     <ClInclude Include="linked_list_st_s.h" />
     <ClInclude Include="raw_data.h" />
-    <ClInclude Include="runtime_bs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -49,13 +49,13 @@
     <Filter Include="Source Files\LinkedList\StaticType\Single">
       <UniqueIdentifier>{0c73248f-44bf-403a-92c5-0919013c6983}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\aaa">
+      <UniqueIdentifier>{b399cf32-0111-422d-b986-ff68863f6d6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="runtime_bs.cpp">
-      <Filter>Source Files\Bitset</Filter>
     </ClCompile>
     <ClCompile Include="raw_data.cpp">
       <Filter>Source Files\Misc\RawData</Filter>
@@ -75,11 +75,11 @@
     <ClCompile Include="linked_list_st_s.cpp">
       <Filter>Source Files\LinkedList\StaticType\Single</Filter>
     </ClCompile>
+    <ClCompile Include="heap_bitset.ixx">
+      <Filter>Source Files\Bitset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="runtime_bs.h">
-      <Filter>Source Files\Bitset</Filter>
-    </ClInclude>
     <ClInclude Include="raw_data.h">
       <Filter>Source Files\Misc\RawData</Filter>
     </ClInclude>
